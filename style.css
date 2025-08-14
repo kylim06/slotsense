@@ -192,11 +192,17 @@ body {
 }
 
 @media (max-width: 768px) {
-    .games-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-    }
+  .game-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .game-card img {
+    width: 100%;
+    height: auto;
+  }
 }
+
 
 @media (max-width: 480px) {
     .games-grid {
