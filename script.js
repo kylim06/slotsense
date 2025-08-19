@@ -22,7 +22,7 @@ function atualizarBarras() {
   const agora = new Date();
   const umaHora = 60 * 60 * 1000;
 
-  if (!porcentagens || (agora - timestamp) > umaHora) {
+ if (!porcentagens || porcentagens.length !== qtd || (agora - timestamp) > umaHora) {
     porcentagens = gerarPorcentagens(qtd);
     localStorage.setItem('porcentagensBarras', JSON.stringify({
       valores: porcentagens,
@@ -43,5 +43,5 @@ function atualizarBarras() {
 
 window.onload = () => {
   atualizarBarras();
-  setInterval(atualizarBarras, 3600000); // Atualiza a cada 1 hora
+  setInterval(atualizarBarras, 3600000);
 };
