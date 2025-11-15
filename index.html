@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Slot Sense</title>
-  <link rel="icon" type="image/png" href="img/logowindow.png" />
+  <link rel="icon" type="image/png" href="img/site/logowindow.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="top-bar">
     <div class="logo">
       <video autoplay loop muted playsinline>
-        <source src="img/slot.mp4" type="video/mp4" />
+        <source src="img/site/slot.mp4" type="video/mp4" />
       </video>
     </div>
   </header>
@@ -19,48 +19,35 @@
   <section class="intro">
     <h1>Bem-vindo ao Slot Sense</h1>
     <p>Aqui você encontra as melhores indicações de slots, confiáveis e com alta chance de ganho.</p>
-  </section>
-
-  <section class="method">
     <h2>Como Funciona</h2>
     <p>Nossa plataforma analisa as melhores probabilidades para você apostar com segurança e emoção.</p>
+    <h2>Pronto para começar? <br/>Clique em algum dos nossos jogos e se divirta</h2>
   </section>
 
-  <section class="security">
-    <h2>Segurança e Confiança</h2>
-    <p>Trabalhamos somente com sites licenciados e testados, garantindo transparência para nossos usuários.</p>
-  </section>
+<section class="providers-filter">
+  <h2>Escolha uma Provedora</h2>
+  <div class="providers-menu">
+    <button class="provider-btn active" data-provider="pgsoft">
+      <img src="img/icon_provedoras/pgicon.png" class="provider-logo" alt="PG Soft">
+      <span class="provider-name">PG Soft</span>
+    </button>
+    <button class="provider-btn" data-provider="pragmatic">
+      <img src="img/icon_provedoras/pragmaticicon.png" class="provider-logo" alt="Pragmatic Play">
+      <span class="provider-name">Pragmatic Play</span>
+    </button>
+    <button class="provider-btn" data-provider="tada">
+      <img src="img/icon_provedoras/tadaicon.png" class="provider-logo" alt="TaDa Gaming">
+      <span class="provider-name">TaDa Gaming</span>
+    </button>
+    <button class="provider-btn" data-provider="wg">
+      <img src="img/icon_provedoras/wgicon.png" class="provider-logo" alt="WG">
+      <span class="provider-name">WG</span>
+    </button>
+  </div>
+</section>
 
-  <section class="call-to-action">
-    <h2>Pronto para começar?</h2>
-    <p>Jogue com responsabilidade e aproveite ao máximo sua experiência com Slot Sense. Clique em algum de nossos jogos para começar</p>
-  </section>
-    <section class="call-to-action">
-    <h2>Clique em algum dos nossos jogos e se divirta</h2>
-  </section>
   <main class="games-grid">
-    <div class="game-card">
-      <div class="game-image" style="background-image: url('img/tigre.png');">
-        <a href="https://www.510bet.xyz/?dl=7jkp70" target="_blank">
-          <button class="play-button">JOGAR</button>
-        </a>
-      </div>
-      <div class="progress-bar" data-percent="67">
-        <div class="progress-fill" style="width:67%; background-color:green;"></div>
-        <div class="progress-text">67%</div>
-      </div>
-    </div>
-    <div class="game-card">
-      <div class="game-image" style="background-image: url('img/touro.webp');">
-        <a href="https://www.510bet.xyz/?dl=7jkp70" target="_blank">
-          <button class="play-button">JOGAR</button>
-        </a>
-      </div>
-      <div class="progress-bar" data-percent="43">
-        <div class="progress-fill" style="width:43%; background-color:red;"></div>
-        <div class="progress-text">43%</div>
-      </div>
-    </div> 
+    <!-- Jogos serão carregados automaticamente aqui -->
   </main>
 
   <section class="benefits">
@@ -68,55 +55,9 @@
     <ul>
       <li>Atualização constante das probabilidades</li>
       <li>Interface simples e intuitiva</li>
-      
       <li>Bônus exclusivos para membros</li>
     </ul>
   </section>
-
-  <script>
-    const novosJogos = [
-      "coelho", "rato", "dragao", "fortunesnake",
-      "dragonhatch", "ganeshagold", "doublefortune", "dragontiguer", "thegreaticescape",
-      "bikiniparadise", "jungledelight", "supermarketspree", "wildbandito", "circusdelight",
-      "piggygold", "genies3wishes", "ganeshafortune", "wildbountyshowdown",
-      "luckypiggy", "midasfortune", "luckyneko", "cocktailnights", "captainsbounty", "caishenwins",
-      "hiphoppanda", "treeoffortune", "vampirescharm", "ninjavssamurai", 
-      "leprechaumriches", "majongways", "shaolinsoccer", "dreamsofmacau", "treasuresofaztec", "secretsofcleopatra",
-      "thairiverwonders", "balivacation", "riseofapollo", "heiststakes", 
-      "waysoftheqilin", "jurassickingdom", "speedwinner", "wildcoaster", 
-      "prosperityfortunetree", "asgardianrising",  "hawaiiantiki", 
-      "supergolfdrive", "safariwilds", "cruiseroyale", "ninjaraccoonfrenzy", "ultimatestriker", 
-      "wildheistcashout", "mafiamayhem", "jackthegianthunter",
-    ];
-
-    const extensoes = {
-      "coelho": "png",
-      "rato": "png",
-      "dragao": "png"
-    };
-
-    const container = document.querySelector(".games-grid");
-
-    novosJogos.forEach(nome => {
-      const percent = Math.floor(Math.random() * 100);
-      const cor = percent >= 50 ? 'green' : 'red';
-      const ext = extensoes[nome] || "webp";
-
-      container.innerHTML += `
-        <div class="game-card">
-          <div class="game-image" style="background-image: url('img/${nome}.${ext}');">
-            <a href="https://www.510bet.xyz/?dl=7jkp70" target="_blank">
-              <button class="play-button">JOGAR</button>
-            </a>
-          </div>
-          <div class="progress-bar" data-percent="${percent}">
-            <div class="progress-fill" style="width:${percent}%; background-color:${cor};"></div>
-            <div class="progress-text">${percent}%</div>
-          </div>
-        </div>
-      `;
-    });
-  </script>
 
   <script src="script.js"></script>
 </body>
