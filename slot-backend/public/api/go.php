@@ -1,40 +1,40 @@
 <?php
+require_once __DIR__ . "/../../src/bootstrap.php";
 
-require_once __DIR__ . "/../../../src/bootstrap.php";
-
-// Ex.: go.php?id=123
-$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-
+// ID obrigatório
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id <= 0) {
     http_response_code(400);
-    echo "Bad id";
-    exit;
+    exit("ID inválido");
 }
 
-// Busca o link do jogo
+// Busca o jogo
 $stmt = $pdo->prepare("SELECT link_affiliate FROM jogos WHERE id = ?");
 $stmt->execute([$id]);
 $jogo = $stmt->fetch();
 
 if (!$jogo) {
     http_response_code(404);
-    echo "Not found";
-    exit;
+    exit("Jogo não encontrado");
 }
 
-// Registrar clique
-$insert = $pdo->prepare("
-    INSERT INTO cliques (jogo_id, ip, user_agent, referrer) 
+// Registra clique no banco (para ajustar porcentagens depois)
+$pdo->prepare("UPDATE jogos SET clicks = clicks + 1 WHERE id = ?")
+    ->execute([$id]);
+
+// Mapa de rastreamento (opcional, mas útil)
+$track = $pdo->prepare("
+    INSERT INTO cliques (jogo_id, ip, user_agent, referrer)
     VALUES (?, ?, ?, ?)
 ");
 
-$insert->execute([
+$track->execute([
     $id,
-    $_SERVER['REMOTE_ADDR']     ?? null,
-    $_SERVER['HTTP_USER_AGENT'] ?? null,
-    $_SERVER['HTTP_REFERER']    ?? null
+    $_SERVER['REMOTE_ADDR'] ?? null,
+    $_SERVER['HTTP_USER_AGENT'] ?? '',
+    $_SERVER['HTTP_REFERER'] ?? ''
 ]);
 
-// Redirecionar para o link
+// Redireciona para o link de afiliado
 header("Location: " . $jogo['link_affiliate']);
 exit;
