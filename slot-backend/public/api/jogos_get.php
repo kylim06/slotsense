@@ -1,11 +1,13 @@
 <?php
-header('Content-Type: application/json; charset=utf-8');
-require_once(__DIR__ . "/../../../src/config.php");
 
+require_once __DIR__ . "/../../../src/bootstrap.php";
 
-// Retorna todos os jogos
-$stmt = $pdo->prepare("SELECT id, nome, imagem, porcentagem FROM jogos ORDER BY popularidade DESC, id ASC");
+// Busca todos os jogos
+$stmt = $pdo->prepare("
+    SELECT id, nome, imagem, porcentagem
+    FROM jogos
+    ORDER BY popularidade DESC, id ASC
+");
 $stmt->execute();
-$jogos = $stmt->fetchAll();
 
-echo json_encode($jogos);
+echo json_encode($stmt->fetchAll());

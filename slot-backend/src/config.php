@@ -1,20 +1,19 @@
 <?php
-declare(strict_types=1);
+// Ativa erros
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-$DB_HOST = '127.0.0.1';
-$DB_NAME = 'slot_sense';
-$DB_USER = 'root';
-$DB_PASS = '';
+// Composer
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-];
+// Carrega .env
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
-try {
-    $pdo = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME;charset=utf8mb4", $DB_USER, $DB_PASS, $options);
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Database connection failed: '. $e->getMessage()]);
-    exit;
-}
+// Conexão
+$pdo = new PDO(
+    "mysql:host=". $_ENV['DB_HOST'] .";dbname=". $_ENV['DB_NAME'],
+    $_ENV['DB_USER'],
+    $_ENV['DB_PASS'],
+    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+);
