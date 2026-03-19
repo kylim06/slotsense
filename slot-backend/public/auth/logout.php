@@ -6,5 +6,5 @@ $_SESSION = [];
 session_destroy();
 
 // Redireciona para a tela de login
-header("Location: /slot/slot-backend/public/auth/login.php");
+header("Location: /slotsense/admin.php");
 exit;

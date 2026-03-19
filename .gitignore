@@ -1,0 +1,16 @@
+# Pastas do Sistema Operacional e IDEs
+.vscode/
+.vs/
+.idea/
+.DS_Store
+
+# Arquivos Sensíveis
+slot-backend/src/config.php
+slot-backend/public/.env
+
+# Outros arquivos da máquina local e logs
+error_log
+*.log
+
+# Caso você decida usar composer no futuro
+vendor/

@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Configuração de codificação de caracteres para suportar acentuação e caracteres especiais -->
   <meta charset="UTF-8" />
+  <!-- Configuração de viewport para garantir que o layout seja responsivo em dispositivos móveis -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Slot Sense</title>
+  
+  <!-- Ícone exibido na aba do navegador -->
   <link rel="icon" type="image/png" href="img/site/logowindow.png" />
+  <!-- Importação do arquivo de estilos principal -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  
+  <!-- ===============================
+       CABEÇALHO (TOP BAR)
+       Contém o logo em vídeo do site
+  ================================ -->
   <header class="top-bar">
     <div class="logo">
+      <!-- Vídeo em loop, sem som, que roda automaticamente -->
       <video autoplay loop muted playsinline>
         <source src="img/site/slot.mp4" type="video/mp4" />
       </video>
     </div>
   </header>
 
+  <!-- ===============================
+       SEÇÃO DE INTRODUÇÃO
+       Mensagem de boas-vindas e breve explicação
+  ================================ -->
   <section class="intro">
     <h1>Bem-vindo ao Slot Sense</h1>
     <p>Aqui você encontra as melhores indicações de slots, confiáveis e com alta chance de ganho.</p>
@@ -24,32 +39,53 @@
     <h2>Pronto para começar? <br/>Clique em algum dos nossos jogos e se divirta</h2>
   </section>
 
-<section class="providers-filter">
-  <h2>Escolha uma Provedora</h2>
-  <div class="providers-menu">
-    <button class="provider-btn active" data-provider="pgsoft">
-      <img src="img/icon_provedoras/pgicon.png" class="provider-logo" alt="PG Soft">
-      <span class="provider-name">PG Soft</span>
-    </button>
-    <button class="provider-btn" data-provider="pragmatic">
-      <img src="img/icon_provedoras/pragmaticicon.png" class="provider-logo" alt="Pragmatic Play">
-      <span class="provider-name">Pragmatic Play</span>
-    </button>
-    <button class="provider-btn" data-provider="tada">
-      <img src="img/icon_provedoras/tadaicon.png" class="provider-logo" alt="TaDa Gaming">
-      <span class="provider-name">TaDa Gaming</span>
-    </button>
-    <button class="provider-btn" data-provider="wg">
-      <img src="img/icon_provedoras/wgicon.png" class="provider-logo" alt="WG">
-      <span class="provider-name">WG</span>
-    </button>
-  </div>
-</section>
+  <!-- ===============================
+       FILTRO DE PROVEDORAS
+       Botões para selecionar qual provedora de jogos exibir
+  ================================ -->
+  <section class="providers-filter">
+    <h2>Escolha uma Provedora</h2>
+    <div class="providers-menu">
+      
+      <!-- Botão da PG Soft (inicia ativo por padrão) -->
+      <button class="provider-btn active" data-provider="pgsoft">
+        <img src="img/icon_provedoras/pgicon.png" class="provider-logo" alt="Logo da PG Soft">
+        <span class="provider-name">PG Soft</span>
+      </button>
 
+      <!-- Botão da Pragmatic Play -->
+      <button class="provider-btn" data-provider="pragmatic">
+        <img src="img/icon_provedoras/pragmaticicon.png" class="provider-logo" alt="Logo da Pragmatic Play">
+        <span class="provider-name">Pragmatic Play</span>
+      </button>
+
+      <!-- Botão da TaDa Gaming -->
+      <button class="provider-btn" data-provider="tada">
+        <img src="img/icon_provedoras/tadaicon.png" class="provider-logo" alt="Logo da TaDa Gaming">
+        <span class="provider-name">TaDa Gaming</span>
+      </button>
+
+      <!-- Botão da provedora WG -->
+      <button class="provider-btn" data-provider="wg">
+        <img src="img/icon_provedoras/wgicon.png" class="provider-logo" alt="Logo da WG">
+        <span class="provider-name">WG</span>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ===============================
+       GRADE DE JOGOS
+       Onde os jogos serão renderizados dinamicamente pelo JavaScript
+  ================================ -->
   <main class="games-grid">
-    <!-- Jogos serão carregados automaticamente aqui -->
+    <!-- O script.js vai inserir dinamicamente os elementos aqui dentro -->
   </main>
 
+  <!-- ===============================
+       BENEFÍCIOS
+       Lista de vantagens da plataforma
+  ================================ -->
   <section class="benefits">
     <h2>Benefícios</h2>
     <ul>
@@ -59,6 +95,7 @@
     </ul>
   </section>
 
+  <!-- Importação do arquivo de scripts principal -->
   <script src="script.js"></script>
 </body>
 </html>
