@@ -1,5 +1,12 @@
 <?php
-require_once __DIR__ . "/../../src/bootstrap.php";
+/**
+ * =========================================================================
+ * REDIRECIONADOR DE AFILIADOS E RASTREIO DE CLIQUES (go.php)
+ * =========================================================================
+ * Registra o clique de um usuário no banco de dados para estatísticas
+ * internas e redireciona de forma segura para o link de afiliado oficial.
+ */
+require_once(__DIR__ . "/../../../src/config.php");
 
 // ID obrigatório
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;

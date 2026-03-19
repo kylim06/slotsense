@@ -2,91 +2,70 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Login - SlotSense</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <title>Login - Administrativo</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: #0f0f0f;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .login-box {
-            background: #1b1b1b;
-            padding: 35px;
-            border-radius: 12px;
-            width: 350px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(255, 180, 0, 0.2);
-        }
-
-        h2 {
-            margin-bottom: 25px;
-            color: #ffb400;
-        }
-
-        label {
-            display: block;
-            text-align: left;
-            margin: 5px 0 3px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: none;
-            border-radius: 6px;
-            background: #2d2d2d;
-            color: #fff;
-            font-size: 15px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(45deg, #ffb400, #ff9900);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            color: #000;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: linear-gradient(45deg, #ffaa00, #ffbb33);
-        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #111; color: white; display:flex; justify-content: center; align-items: center; height: 100vh; margin:0;}
+        .login-box { background: #222; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); width: 100%; max-width: 400px;}
+        h2 { color: #ffb400; text-align: center; margin-bottom: 30px;}
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #ccc;}
+        input { width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box;}
+        button { width: 100%; padding: 12px; background: #ffb400; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; color: black; font-size: 1.1rem; margin-top: 10px;}
+        button:hover { background: #e5a200; }
+        #msg { text-align: center; color: #ff4444; margin-top: 15px; font-weight: bold; }
     </style>
 </head>
-
 <body>
-
     <div class="login-box">
-        <h2>Login Admin</h2>
-
-        <form action="login.php" method="POST">
+        <h2>Acesso Restrito</h2>
+        
+        <form id="frmLogin">
+            <div class="form-group">
+                <label>E-mail:</label>
+                <input type="email" name="email" placeholder="Digite seu e-mail" required>
+            </div>
             
-            <input type="hidden" name="from_form" value="1">
-
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" required>
-
-            <button type="submit">Entrar</button>
-
+            <div class="form-group">
+                <label>Senha:</label>
+                <input type="password" name="senha" placeholder="Digite sua senha" required>
+            </div>
+            
+            <button type="submit">Entrar no Painel</button>
+            <div id="msg"></div>
         </form>
     </div>
 
+    <script>
+        document.getElementById('frmLogin').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const msg = document.getElementById('msg');
+            msg.style.color = '#ccc';
+            msg.textContent = 'Verificando...';
+
+            const formData = new FormData(this);
+            try {
+                const response = await fetch('login.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.ok) {
+                    msg.style.color = '#44d06b';
+                    msg.textContent = 'Sucesso! Redirecionando...';
+                    setTimeout(() => {
+                        window.location.href = '../admin/index.php';
+                    }, 500);
+                } else {
+                    msg.style.color = '#ff4444';
+                    msg.textContent = 'Erro: Credenciais inválidas.';
+                }
+            } catch (error) {
+                msg.style.color = '#ff4444';
+                msg.textContent = 'Erro de conexão.';
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,165 +1,83 @@
 <?php
-require_once __DIR__ . "/../../src/functions.php";
+/**
+ * =========================================================================
+ * DASHBOARD ADMIN (index.php)
+ * =========================================================================
+ */
+require_once __DIR__ . '/../../src/functions.php';
 require_auth();
-if (!is_admin()) {
-    http_response_code(403);
-    exit("Acesso negado.");
-}
+if (!is_admin()) { echo "Acesso Negado. Você não é admin."; exit; }
+
+// Pega lista de jogos incluindo a provedora
+$stmt = $pdo->query("SELECT * FROM jogos ORDER BY provedora ASC, id DESC");
+$jogos = $stmt->fetchAll();
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Painel Admin - SlotSense</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8">
+    <title>Painel Admin - Slot Sense</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #232323; color: white; margin: 0; padding: 0;}
+        .header { background: #111; padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #ffb400;}
+        .header h1 { margin: 0; font-size: 1.5rem; color:#ffb400;}
+        .header a { color: #fff; text-decoration: none; padding: 8px 15px; background: #d9534f; border-radius: 4px; font-weight:bold;}
+        .container { padding: 30px; max-width: 1000px; margin: auto; }
+        .btn-novo { display: inline-block; background: #44d06b; color: #111; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-bottom: 20px;}
+        table { width: 100%; border-collapse: collapse; background: #333; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px 15px; text-align: left; }
+        th { background: #1a1a1a; color: #ffb400; font-weight: 600; }
+        tr:nth-child(even) { background: #2a2a2a; }
+        tr:hover { background: #444; }
+        .img-preview { border-radius: 8px; object-fit: cover; }
+        .btn-editar { background: #ffb400; color: #000; padding: 5px 15px; text-decoration: none; border-radius: 4px; font-weight: bold; }
+    </style>
 </head>
-
-<body class="bg-gray-900 text-white">
-
-<!-- NAVBAR -->
-<header class="w-full bg-gray-800 text-white py-4 px-6 flex justify-between items-center shadow">
-    <h1 class="text-2xl font-semibold">Painel Administrativo</h1>
-
-    <div class="flex gap-4">
-        <a href="novo_jogo.php"
-           class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-medium">
-            + Novo Jogo
-        </a>
-
-        <a href="../auth/logout.php"
-           class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white font-medium">
-            Sair
-        </a>
+<body>
+    <div class="header">
+        <h1>Painel Admin</h1>
+        <div>
+            <span>Olá, <?=htmlspecialchars($_SESSION['user_name'])?> &nbsp;</span>
+            <a href="alterar_senha.php" style="background:#5bc0de; margin-right:5px;">Alterar Acesso</a>
+            <a href="../auth/logout.php">Sair</a>
+        </div>
     </div>
-</header>
-
-<!-- CONTAINER -->
-<div class="max-w-6xl mx-auto mt-10 bg-gray-800 shadow-lg rounded-lg p-8">
-
-    <h2 class="text-xl font-bold mb-6">Gerenciar Jogos</h2>
-
-    <!-- TABELA -->
-    <table class="w-full text-left border-collapse">
-        <thead>
-            <tr class="bg-gray-700 text-gray-200 uppercase text-sm">
-                <th class="p-3">ID</th>
-                <th class="p-3">Imagem</th>
-                <th class="p-3">Nome</th>
-                <th class="p-3 w-32">Porcentagem</th>
-                <th class="p-3">Ações</th>
-            </tr>
-        </thead>
-        <tbody id="tabela-jogos" class="bg-gray-900"></tbody>
-    </table>
-
-    <button id="salvarBtn"
-            class="mt-6 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded">
-        Salvar Alterações de Porcentagem
-    </button>
-
-</div>
-
-<script>
-async function carregarJogos() {
-    const tabela = document.getElementById("tabela-jogos");
-
-    tabela.innerHTML = `
-        <tr><td colspan="5" class="text-center p-4">Carregando...</td></tr>
-    `;
-
-    const req = await fetch("/slot/slot-backend/public/api/jogos_get.php");
-    const jogos = await req.json();
-
-    tabela.innerHTML = "";
-
-    if (!Array.isArray(jogos) || jogos.length === 0) {
-        tabela.innerHTML = `
-            <tr><td colspan="5" class="text-center p-4 text-gray-300">Nenhum jogo cadastrado.</td></tr>
-        `;
-        return;
-    }
-
-    jogos.forEach(jogo => {
-        tabela.innerHTML += `
-            <tr class="border-b border-gray-700">
-                <td class="p-3">${jogo.id}</td>
-
-                <td class="p-3">
-                    <img src="${jogo.imagem}" class="w-16 h-16 rounded shadow">
-                </td>
-
-                <td class="p-3 font-medium">${jogo.nome}</td>
-
-                <td class="p-3">
-                    <input 
-                        type="number"
-                        min="0" max="100"
-                        value="${jogo.porcentagem}"
-                        class="porcentInput w-20 px-2 py-1 border rounded bg-gray-700"
-                        data-id="${jogo.id}"
-                    >
-                </td>
-
-                <td class="p-3 flex gap-3">
-                    <a href="editar_jogos.php?id=${jogo.id}"
-                       class="text-blue-400 hover:text-blue-300 font-semibold">
-                        Editar
-                    </a>
-
-                    <button onclick="deletar(${jogo.id})"
-                            class="text-red-400 hover:text-red-300 font-semibold">
-                        Excluir
-                    </button>
-                </td>
-            </tr>
-        `;
-    });
-}
-
-async function salvarAlteracoes() {
-    const inputs = document.querySelectorAll(".porcentInput");
-    const valores = [];
-
-    inputs.forEach(inp => {
-        valores.push({
-            id: inp.dataset.id,
-            porcentagem: inp.value
-        });
-    });
-
-    const req = await fetch("/slot/slot-backend/public/api/jogos_update.php", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ valores })
-    });
-
-    const res = await req.json();
-
-    if (res.ok) {
-        alert("Porcentagens atualizadas com sucesso!");
-    } else {
-        alert("Erro ao atualizar.");
-    }
-}
-
-async function deletar(id) {
-    if (!confirm("Tem certeza que deseja excluir este jogo?")) return;
-
-    const req = await fetch(`/slot/slot-backend/public/api/jogos_delete.php?id=${id}`);
-    const res = await req.json();
-
-    if (res.ok) {
-        alert("Jogo excluído!");
-        carregarJogos();
-    } else {
-        alert("Erro ao excluir jogo!");
-    }
-}
-
-document.getElementById("salvarBtn").onclick = salvarAlteracoes;
-
-carregarJogos();
-</script>
-
+    <div class="container">
+        <a href="novo_jogo.php" class="btn-novo">+ Cadastrar Novo Jogo</a>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Capa</th>
+                    <th>Nome</th>
+                    <th>Provedora</th>
+                    <th>Win% Fixo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($jogos as $j): ?>
+                <tr>
+                    <td>
+                        <?php if($j['imagem']): ?>
+                            <img src="/slotsense/img/jogos_<?=htmlspecialchars($j['provedora'])?>/<?=htmlspecialchars($j['imagem'])?>" width="60" class="img-preview">
+                        <?php else: ?>
+                            <span style="color:#aaa;">Sem capa</span>
+                        <?php endif; ?>
+                    </td>
+                    <td><?= htmlspecialchars($j['nome']) ?></td>
+                    <td><strong style="text-transform:uppercase; color:#ffb400;"><?= htmlspecialchars($j['provedora']) ?></strong></td>
+                    <td><?= $j['porcentagem'] > 0 ? $j['porcentagem'].'%' : '<span style="color:#aaa;">Dinâmico/Site</span>' ?></td>
+                    <td>
+                        <a href="editar_jogo.php?id=<?= $j['id'] ?>" class="btn-editar">Editar</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <?php if(empty($jogos)): ?>
+                    <tr><td colspan="5" style="text-align:center;">Nenhum jogo cadastrado.</td></tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

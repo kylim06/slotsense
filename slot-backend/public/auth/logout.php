@@ -1,5 +1,7 @@
 <?php
 session_start();
 session_destroy();
-header("Location: login_form.html");
+
+// Redireciona para a tela de login
+header("Location: /slotsense/admin.php");
 exit;
