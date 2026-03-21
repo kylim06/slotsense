@@ -6,7 +6,7 @@
  * Registra o clique de um usuário no banco de dados para estatísticas
  * internas e redireciona de forma segura para o link de afiliado oficial.
  */
-require_once(__DIR__ . "/../../../src/config.php");
+require_once(__DIR__ . "/../../src/config.php");
 
 // ID obrigatório
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;

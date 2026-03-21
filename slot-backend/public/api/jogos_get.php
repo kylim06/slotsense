@@ -11,11 +11,11 @@
 header('Content-Type: application/json; charset=utf-8');
 
 // Adquire config e PDO
-require_once(__DIR__ . "/../../../src/config.php");
+require_once(__DIR__ . "/../../src/config.php");
 
 try {
     // Retorna todos os jogos, garantindo ordem de popularidade ou ID
-    $stmt = $pdo->prepare("SELECT id, nome, provedora, imagem, porcentagem FROM jogos ORDER BY popularidade DESC, id ASC");
+    $stmt = $pdo->prepare("SELECT id, nome, provedora, imagem, porcentagem FROM jogos ORDER BY id ASC");
     $stmt->execute();
     
     // Obtém lista como Array do lado PHP e converte para JSON Puro para os clientes

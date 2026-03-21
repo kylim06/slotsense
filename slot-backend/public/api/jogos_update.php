@@ -7,7 +7,7 @@
  * para atualizar múltiplos jogos de uma vez só via requisição administrativa.
  */
 header('Content-Type: application/json; charset=utf-8');
-require_once(__DIR__ . "/../../../src/config.php");
+require_once(__DIR__ . "/../../src/config.php");
 
 require_once __DIR__ . "/../../../src/bootstrap.php";
 

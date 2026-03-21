@@ -51,7 +51,7 @@
                 
                 const data = await response.json();
                 
-                if (response.ok && data.ok) {
+                if (response.ok && (data.ok || data.success)) {
                     msg.style.color = '#44d06b';
                     msg.textContent = 'Sucesso! Redirecionando...';
                     setTimeout(() => {

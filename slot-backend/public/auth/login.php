@@ -1,7 +1,4 @@
 <?php
-session_start();
-
-require_once __DIR__ . "/../../src/config.php";
 require_once __DIR__ . "/../../src/functions.php";
 
 // Somente método POST
