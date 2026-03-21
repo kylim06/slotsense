@@ -20,11 +20,11 @@ require_once __DIR__ . '/config.php';
 function require_auth() {
     if (!isset($_SESSION['user_id'])) {
         http_response_code(401);
+
         echo json_encode(['error'=>'Unauthorized - Você precisa se autenticar']);
         exit;
     }
 }
-
 /**
  * Retorna indicativo de se a sessão atual em vigor tem o status de `is_admin`
  * @return bool
