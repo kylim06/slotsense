@@ -34,8 +34,4 @@ CREATE TABLE IF NOT EXISTS cliques (
 -- Inserindo um usuário Admin padrão: admin@slotsense.com / Senha: admin
 -- A senha 'admin' foi hasheada com bcrypt
 INSERT IGNORE INTO usuarios (nome, email, senha_hash, is_admin) VALUES 
-('Administrador', 'admin@slotsense.com', '$2y$10$wT8m/KAYI6tXQ03qQkOaMeQJ.0S/zR9e4g10N4yQ10N4yQ10N4yQ10', 1);
-
--- Nota: Para fins reais em produção gere outro hash via password_hash('admin', PASSWORD_DEFAULT)
--- Usaremos um hash conhecido temporário:
-UPDATE usuarios SET senha_hash = '$2y$10$O0S.sNl0u236nCgC4S2T0OMR6tL1B14g3s6Vn4B10N4yQ10N4yQ10' WHERE email = 'admin@slotsense.com';
+('Administrador', 'admin@slotsense.com', '$2y$10$QSGIYKtlTWU9i7ykpGV3auB3lsD.4XWNQWU7vFdR0TQIu.LHu/3Re', 1);
